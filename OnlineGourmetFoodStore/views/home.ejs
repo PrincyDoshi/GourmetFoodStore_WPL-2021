@@ -1,0 +1,182 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <title>Nutrivia - Home</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="stylesheets/home.css">
+
+        <script type="text/javascript">
+            
+            let jsp_current_page = 1;
+            const jsp_records_per_page = 6;
+
+            var jsp_json_object = <%- JSON.stringify(result) %>
+            console.log(jsp_json_object);
+
+            var length = jsp_json_object.length 
+            console.log(length);
+            
+            function jsp_num_pages() {
+                return Math.ceil(length / jsp_records_per_page);
+            }
+
+            function jsp_prev_page() {
+                if (jsp_current_page > 1) {
+                    jsp_current_page--;
+                    jsp_change_page(jsp_current_page);
+                }
+            }
+
+            function jsp_next_page() {
+                if (jsp_current_page < jsp_num_pages()) {
+                    jsp_current_page++;
+                    jsp_change_page(jsp_current_page);
+                }
+            }
+
+            function jsp_change_page(page) {
+                const btn_prev = document.getElementById('btn-prev');
+                const btn_next = document.getElementById('btn-next');
+                const listing_table = document.getElementById('listing-table');
+                let page_span = document.getElementById('page');
+
+                if (page < 1) {
+                    page = 1;
+                }
+                if (page > jsp_num_pages()) {
+                    page = jsp_num_pages();
+                }
+
+                listing_table.innerHTML = '';
+
+                for (let i = (page - 1) * jsp_records_per_page; i < (page * jsp_records_per_page) && i < length; i++) {
+                    var image = jsp_json_object[i].image
+                    var prodName = jsp_json_object[i].prodName
+                    var calories = jsp_json_object[i].calories
+                    var category = jsp_json_object[i].category
+                    var price = jsp_json_object[i].price
+                    var description = jsp_json_object[i].description
+                    var id = jsp_json_object[i]._id
+                    var availability = jsp_json_object[i].availableQnty
+                    var tempStr = '<div class="col-md-4  mt-2 " ><div class="image-box mt-1 " style="padding: 5%;"><img width="261" height="209" class="img-responsive" src="images/'+image+'"></div><div class="brand-productcard" name="prodName"> <a href="/detailedView/'+id+'" class="link-danger">'+ prodName +'</a></div><div>Calories: '+calories+'kcal</div><div>Category: '+ category +'</div><span class="sales-price"> Price: $'+ price +'</span><form action="/addToCart/'+ id +'" method="post"><form action="/addToCart/'+id +'"method="post"><div class="form-group mt-2 my-2"><p>Quantity:  <select name="Quantity" id="quantity"> '
+
+                    var tempStr2 = ''
+                    for(var j = 1 ; j <= availability; j++) {
+                        tempStr2 = tempStr2 + '<option value="'+ j +'">'+ j +'</option>'
+                    }
+
+                    listing_table.innerHTML += tempStr + tempStr2 +'</select></p></div><button type="submit" class="btn btn-success">Add to cart</button></form>';
+            }
+            page_span.innerHTML = `${page}/${jsp_num_pages()}`;
+
+            btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
+            btn_next.style.display = (page === jsp_num_pages()) ? 'none' : 'inline-block';
+        }
+    
+
+        window.onload = () => {
+            document.getElementById('btn-prev').addEventListener('click', (e) => {
+                e.preventDefault();
+                jsp_prev_page();
+
+                console.log(" This is json obj ", jsp_json_object)
+            });
+
+            document.getElementById('btn-next').addEventListener('click', (e) => {
+                e.preventDefault();
+                jsp_next_page();
+            });
+            
+            jsp_change_page(1);
+        };
+    </script>
+
+</head>
+<body>
+    <section class="mt-2">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg ftco-navbar-light" id="ftco-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="/home">Nutrivia</a>
+                    <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav ml-auto mr-md-3">
+                            <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                            
+                            <li class="nav-item"><a href="/orderHistory" class="nav-link">View Order History</a></li>
+                            
+                            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+
+                            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                            <li class="dropdown nav-item d-md-flex align-items-center">
+                                <a href="/cart" class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <b class="caret"></b>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> 
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+                <form action="/search" method="post" style="align-content: center;"> 
+                    <div class="input-group rounded">
+
+                        <input type="text" id="search" name="Search" class="form-control rounded" placeholder="Search by Product Name.."/>
+                        
+                                <select class="btn btn-success  mx-2 input col-lg-12 form-control mr-sm-2 rounded" id="categories" name="Categories">
+                                    <option value="none" selected disabled hidden>
+                                    Categories </option>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Beverage">Beverage</option>
+                                    <option value="Dessert">Dessert</option>
+                                    <option value="Spices">Spices</option>
+                                    <option value="Grains">Grains</option>
+                                </select>  
+                            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>  
+                        </div>
+                    </form>
+                    <br>
+                    <% if(user.isAdmin=="true" ){ %>
+                    <div>
+                        <button class="btn btn-success mx-2"><a class="text-white" href="/add">Add New Item</a></button>
+                    </div>   
+                    <% } %>
+                </nav>
+            </div>
+            <div class="container-fluid mt-3">
+                <div class="row" style="padding-left: 10%;">
+                    <div class="col-md-12" >
+                            <div class="row" id="listing-table">
+                                <% result.forEach(function(product){ %>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </br>
+            
+    <nav aria-label="Page navigation example">
+        <p class="d-flex justify-content-center mt-3">
+            <button class="btn" id="btn-prev">Prev</button>
+            <button class="btn" id="btn-next">Next</button>
+        </p>
+        <p class="d-flex justify-content-center mt-3">Page <span id="page"></span></p>
+    </nav>
+</section>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/HomePage.css">
+
+    
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/home">Nutrivia</a>
+                    <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav ml-auto mr-md-3">
+                            <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                            
+                            <li class="nav-item"><a href="/orderHistory" class="nav-link">View Order History</a></li>
+                            
+                            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+
+                            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                            <li class="dropdown nav-item d-md-flex align-items-center">
+                                <a href="/cart" class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <b class="caret"></b>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    
+                </div>
+            </nav>
+            
+            <!-- END nav -->
+        </div>
+        <div class="container">
+            <h2> <%= product.prodName %> Details </h2>
+            <img src="/images/<%= product.image %>" class="img-thumbnail" />
+            <p>Product Name: <%= product.prodName %></p>
+            <p>Price: $<%= product.price %></p>
+            <p>Calories: <%= product.calories %> kcal</p>
+            <p>Weight: <%= product.weight %></p>
+            <p>Description: <%= product.description %></p>
+            
+            <form action="/addToCart/<%= product._id %>" method="post">
+                <div class="form-group mt-2">
+                    <input type="number" id="quantity" name="Quantity" min="1" max="<%= product.availableQnty %>" value=1>
+                </div>
+                <div class="form-group"><button type="submit" class="btn btn-danger mt-2" >Add to Cart</button></div>
+            </form>
+            
+            <% if(user.isAdmin=="true" ){ console.log("inside check") %>
+            <a class="btn btn-warning mt-2" href="/edit/<%= product._id %>" role="button">Edit Product</a>
+            <% } %>
+            <p><a href="/home">Back to Home</a></p>
+        </div>
+    </body>
+
+    </html>

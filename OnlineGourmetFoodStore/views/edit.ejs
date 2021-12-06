@@ -1,0 +1,118 @@
+<!doctype html>
+	<html lang="en">
+	<head>
+		<title>Nutrivia - Edit product</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="stylesheets/signin.css">
+		<style type="text/css">
+			
+			.login100-form-avatar {
+				display: block;
+				width: 120px;
+				height: 120px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin: 0 auto;
+			}
+
+			.login100-form-avatar img {
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+            <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="/home">Nutrivia</a>
+                     <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav ml-auto mr-md-3">
+                            <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                            
+                            <li class="nav-item"><a href="/orderHistory" class="nav-link">View Order History</a></li>
+                            
+                            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+
+                            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                            <li class="dropdown nav-item d-md-flex align-items-center">
+                                <a href="/cart" class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <b class="caret"></b>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+           
+        </div>
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center">
+            </div>
+            <div class="row justify-content-center">
+            	<div class="col-md-7 col-lg-6 col-xl-5">
+            		<div class="login-wrap p-4 p-md-5">
+            			<div class="icon d-flex align-items-center justify-content-center login100-form-avatar">
+            				<img src="/images/logo.jpg" alt="LOGO">
+            			</div>
+            			<h4 class="text-center mb-4">Nutrivia</h4>
+            			<h3 class="text-center mb-4">Edit a Product</h3>
+            			<form class="signup-form" action="/edit/<%= product._id %>" method="POST">
+            				<div class="form-group mb-3">
+            					<label class="label" for="prodName">Product Name</label>
+            					<input type="text" name="prodName" class="form-control" placeholder="Product Name" value= "<%= product.prodName %>" required/>
+            				</div>
+            				<div class="form-group mb-3">
+            					<label class="label" for="availableQnty">Available Quantity</label>
+            					<input type="number" name="availableQnty" class="form-control" value= "<%= product.availableQnty %>" placeholder="Available Quantity"required/>
+            				</div>
+            				<div class="form-group mb-3">
+            					<label class="label" for="price">Product Price</label>
+            					<input type="number" name="price" class="form-control" value= "<%= product.price %>" placeholder="Product Price" required>
+            				</div>
+            				<div class="form-group mb-3">
+            					<label class="label" for="calories">Product Calories</label>
+            					<input type="text" name="calories" class="form-control" value= "<%= product.calories %>" placeholder="Product Calories" required>
+            				</div>
+            				<div class="form-group mb-3">
+            					<label class="label" for="image">Product Image</label>
+            					<input type="text" name="ogImage" class="form-control" value= "<%= product.image %>">
+            					<input type="file" name="image" class="form-control" id="avatar" accept="image/png, image/jpeg,image/jpg">
+            				</div>
+            				<div class="form-group mb-3">
+            					<label class="label" for="calories">Product Description</label>
+            					<textarea name="description" class="form-control" placeholder="Product Description"><%= product.description %></textarea>
+            				</div>
+            				<div class="form-group">
+            					<button type="submit" class="form-control btn btn-success rounded submit px-3">Update Product</button>
+            				</div>
+            				<br/>
+
+            				<div class="form-group">
+            					<button type="submit" class="form-control btn btn-danger rounded submit px-3"><a href="/delete/<%= product._id %>" class="text-white">Delete Item</a></button>
+            				</div>
+            			</form>
+            			<div class="back-to-shop text-center"><a href="/home">&leftarrow; Back to shop</a></div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

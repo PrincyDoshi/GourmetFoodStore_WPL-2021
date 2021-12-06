@@ -1,0 +1,124 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <title>Nutrivia - Cart</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/cart.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/home">Nutrivia</a>
+                   <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav ml-auto mr-md-3">
+                            <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                            
+                            <li class="nav-item"><a href="/orderHistory" class="nav-link">View Order History</a></li>
+                            
+                            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+
+                            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                            <li class="dropdown nav-item d-md-flex align-items-center">
+                                <a href="/cart" class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <b class="caret"></b>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                 </div>
+            </nav>
+        </div>
+        <section>
+            <div class="container">
+                <div class="row justify-content-center">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="h3 mb-4 text-center"><b>Cart</b></h3>
+                    <div class="table-wrap">
+                        <table class="table">
+                          <thead class="thead-primary">
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th style="font-size:25px;"><b>Product</b></th>
+                                <th style="font-size:25px;"><b>Price</b></th>
+                                <th style="font-size:25px;"><b>Quantity</b></th>
+                                <th style="font-size:25px;">&nbsp;</th>
+                                <th style="font-size:25px;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% items.forEach(function(item){ %>
+                            <tr class="alert" role="alert">
+                                
+                              <td>
+                                <div class="my-2"><img class="img-fluid" width="100px" height="100px" src="images/<%= item.image %>"></div>
+                            </td>
+                            <td>
+                                <div class="email">
+                                    <input class="label" readonly value="<%= item.ProdName %>">
+                                </div>
+                            </td>
+                            <form action="/updateCart/<%= item.productID %>" method="post">
+                              <td><input class="label" readonly value= "$ <%= item.price %>"></td>
+                              <td class="quantity">
+                                <div class="input-group">
+                                    <input type="number" id="quantity" name="quantity" min="1" max="<%= item.max %>"
+                                    value="<%= item.quantity %>">
+                                </div>
+                            </td>
+                            <td><button class="btn btn-success mx-2" type="submit" style="width: auto; height: auto;">Update</button></td>
+                            
+                        </form>
+                        <form action="/removeCart/<%= item.productID %>" method="get">
+                            <td><button class="btn btn-danger mx-2" type="submit" style="width: auto; height: auto;">Delete</button></td>
+                        </form>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <h5 class="h2 mb-4 text-center"><b>Summary</b></h5>
+        </div>
+
+        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+            <div class="col h4">TOTAL PRICE</div>
+            <div class="col text-right h3">$ <%= totalCost %></div>
+        </div> 
+        <div class="text-center">
+            <form action="/checkout" method="get">
+                <button class="btn btn-success btn-center" type="submit">CHECKOUT</button>
+            </form>
+        </div>
+        <div class="back-to-shop text-center"><a href="/home">&leftarrow; Back to shop</a></div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
+
